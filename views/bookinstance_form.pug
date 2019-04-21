@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  h1= title
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='books') Books:
+      select#books.form-control(type='select', placeholder='Select book' name='books' required='true' )
+        for book in books
+          if bookInstance
+            option(value=book._id selected=(book._id.toString()==bookInstance.book ? 'selected' : false) ) #{book.title}
+          else
+            option(value=book._id) #{book.title}
+    div.form-group
+      label(for='imprint') Imprint:
+      input#imprint.form-control(type='text', placeholder='imprint' name='imprint'  value=(undefined===bookInstance ? '' : bookInstance.imprint) ) 
+    div.form-group
+      label(for='status') Status:
+      select#status.form-control(type='select', placeholder='Select status' name='status' required='true' )
+          if bookInstance
+            option(value='Available' selected=('Available'===bookInstance.status ? 'selected': false)) Available
+            option(value='Maintenance' selected=('Maintenance'===bookInstance.status ? 'selected': false)) Maintenance
+            option(value='Loaned' selected=('Loaned'===bookInstance.status ? 'selected': false)) Loaned
+            option(value='Reserved' selected=('Reserved'===bookInstance.status ? 'selected': false)) Reserved
+          else
+            option(value='Available' selected=false) Available
+            option(value='Maintenance' selected='selected') Maintenance
+            option(value='Loaned' selected=false) Loaned
+            option(value='Reserved' selected=false) Reserved
+    div.form-group
+      label(for='due_back') Due date:
+      input#due_back.form-control(type='date' name='due_back' value=(undefined===bookInstance ? '' : bookInstance.due_back_formatted2))
+    button.btn.btn-primary(type='submit') Submit
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg

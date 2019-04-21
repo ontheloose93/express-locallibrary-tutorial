@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  h1= title
+  
+  //
+    My version of the solution
+  ul
+    each author in author_list
+      li 
+        a(href=author.url) #{author.name} - 
+        | (
+        if typeof author.date_of_birth != 'undefined' 
+          span  #{author.date_of_birth} -
+        if typeof author.date_of_death != 'undefined'
+          span  #{author.date_of_death}
+        if true
+          span )
+  hr
+  h2 Version du site
+  ul
+    each author in author_list
+      li 
+        a(href=author.url) #{author.name} 
+        |  (#{author.date_of_birth} - #{author.date_of_death}) and #{author.lifespan}
+
+    else
+      li There are no authors.         
